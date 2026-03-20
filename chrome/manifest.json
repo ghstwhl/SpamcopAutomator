@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "SpamCop Automator",
+  "version": "1.0",
+  "description": "Automatically submit all spamcop reports. Just click 'Report Spam Messages' on the spamcop page or submit a spam while this extension is installed.",
+  "permissions": ["activeTab"],
+  "host_permissions": [
+    "https://www.spamcop.net/sc*"
+  ],
+  "action": {
+    "default_title": "SpamCop Automator"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.spamcop.net/sc*"],
+      "js": ["content.js"]
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "spamcop-automator@ghostwheel.kiwi",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  }
+}
