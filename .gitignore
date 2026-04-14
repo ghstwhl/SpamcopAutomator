@@ -94,6 +94,7 @@ coverage/
 *.doc
 *.docx
 *.md
+!.github/**/*.md
 
 # Ignore other system files
 .Spotlight-V100
