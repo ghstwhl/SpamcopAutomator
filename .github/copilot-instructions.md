@@ -65,7 +65,6 @@ a self-invoking function (IIFE) on every matching page load:
    `location.href = attrQuoteEscape(link.href)`.
 
 Helper functions defined inside the IIFE:
-- `htmlEscape(s)` – escapes `&`, `>`, `<` for HTML context.
 - `attrQuoteEscape(s)` – escapes `&` and `"` for use in an HTML attribute/URL context;
   applied to all `href` values before assigning to `location.href` to prevent
   open-redirect XSS.
@@ -82,8 +81,9 @@ Helper functions defined inside the IIFE:
 | Test hook | None | Checks `global.redirected`; if defined, writes the resolved URL there instead of navigating – used for unit testing without a real browser |
 
 The `manifest.json` files are otherwise identical (same name, version, description,
-permissions, host permissions, content script declaration, and `browser_specific_settings`
-gecko ID `spamcop-automator@ghostwheel.kiwi`).
+action title, content script declaration, and `browser_specific_settings` gecko ID
+`spamcop-automator@ghostwheel.kiwi`). Neither manifest currently requests any API
+permissions or host permissions.
 
 ---
 
@@ -107,25 +107,7 @@ To package for distribution:
 
 ## Known Issues and Quirks
 
-1. **`.gitignore` blocks `*.md` files** – The repo's `.gitignore` previously contained
-   `*.md` at the repository root, which would have prevented Markdown files from being
-   tracked. A negation rule `!.github/**/*.md` was added so that files inside `.github/`
-   (including this file) are still tracked by git. Any future Markdown files intended
-   to be committed (e.g., a README) should either be placed under `.github/` or have a
-   corresponding negation rule added to `.gitignore`.
-
-2. **Unused helper `htmlEscape`** – The `htmlEscape` function is defined in both
-   `content.js` files but is never called. It may be a leftover from an earlier
-   implementation.
-
-3. **Unused variable `n`** – In both content scripts, `var n = 0;` is declared but
-   never read or written after that point. It is safe to remove.
-
-4. **Dead condition `if (x != null)`** – The variable `x` is set to the string literal
-   `'sc?id='` two lines earlier and can never be `null` at that point. The condition is
-   always `true` and the `if` block is therefore unconditional.
-
-5. **No automated tests** – The only test hook in the codebase is the `global.redirected`
+1. **No automated tests** – The only test hook in the codebase is the `global.redirected`
    variable in `firefox/content.js`. There is no test runner, no spec files, and no CI
    configuration.
 
@@ -142,4 +124,4 @@ To package for distribution:
   a real or mock SpamCop confirmation page. Since there are no automated tests, manual
   verification against the target URL pattern `https://www.spamcop.net/sc*` is the only
   option currently available.
-- **Packaging:** The `.gitignore` already excludes `.crx` and `.xpi` artifacts.
+- **Packaging:** The `.gitignore` excludes `.zip` and `.xpi` artifacts.
