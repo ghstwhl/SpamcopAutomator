@@ -5,3 +5,6 @@ Thumbs.db
 # build artifacts
 *.zip
 *.xpi
+
+# Workspace files are local to the developer and should not be shared
+*.code-workspace
